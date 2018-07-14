@@ -1,7 +1,7 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
-
+const mdxextensions = ['mdx','MDx']
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId },
   pluginOptions,
@@ -9,13 +9,19 @@ module.exports = async function onCreateNode(
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
+  /* We want to use mdx extension.
   if (
     node.internal.mediaType !== `text/markdown` &&
     node.internal.mediaType !== `text/x-markdown`
   ) {
     return
   }
-
+  */
+  if (
+    !mdxextensions.includes(node.extension) //KWANG mdx fpp
+  ) {
+    return;
+  } 
   const content = await loadNodeContent(node)
   const data = grayMatter(content, pluginOptions)
 
