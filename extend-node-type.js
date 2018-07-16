@@ -61,7 +61,12 @@ const remark2retext = require('remark-retext');
 
 const stripPosition = require('unist-util-remove-position');
 
-const hastReparseRaw = require('hast-util-raw');
+const hastReparseRaw = require('hast-util-raw'); // KWANG constants
+
+
+const {
+  mdxtype
+} = require('./constants');
 
 let pluginsCacheStr = '';
 let pathPrefixCacheStr = '';
@@ -102,7 +107,8 @@ module.exports = ({
   compilers = [],
   ...pluginOptions
 }) => {
-  if (type.name !== 'MarkdownRemark') {
+  // KWANG
+  if (type.name !== mdxtype) {
     return {};
   }
 

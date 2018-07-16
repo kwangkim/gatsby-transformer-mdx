@@ -36,6 +36,8 @@ const english = require('retext-english')
 const remark2retext = require('remark-retext')
 const stripPosition = require('unist-util-remove-position')
 const hastReparseRaw = require('hast-util-raw')
+// KWANG constants
+const { mdxtype } = require('./constants')
 
 let pluginsCacheStr = ''
 let pathPrefixCacheStr = ''
@@ -77,7 +79,8 @@ module.exports = (
   // eslint-disable-next-line no-unused-vars
   { remarkPlugins = [], rehypePlugins = [], compilers = [], ...pluginOptions },
 ) => {
-  if (type.name !== 'MarkdownRemark') {
+  // KWANG
+  if (type.name !== mdxtype) {
     return {}
   }
 

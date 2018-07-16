@@ -6,7 +6,10 @@ const crypto = require(`crypto`);
 
 const _ = require(`lodash`);
 
-const mdxextensions = ['mdx', 'MDx'];
+const {
+  mdxtype,
+  mdxextensions
+} = require('./constants');
 
 module.exports = async function onCreateNode({
   node,
@@ -27,11 +30,11 @@ module.exports = async function onCreateNode({
     return
   }
   */
+  // KWANG mdx extenstions
 
-  if (!mdxextensions.includes(node.extension) //KWANG mdx fpp
-  ) {
-      return;
-    }
+  if (!mdxextensions.includes(node.extension)) {
+    return;
+  }
 
   const content = await loadNodeContent(node);
   const data = grayMatter(content, pluginOptions); // Convert date objects to string. Otherwise there's type mismatches
@@ -48,12 +51,12 @@ module.exports = async function onCreateNode({
   }
 
   const markdownNode = {
-    id: createNodeId(`${node.id} >>> MarkdownRemark`),
+    id: createNodeId(`${node.id} >>> ${mdxtype}`),
     children: [],
     parent: node.id,
     internal: {
       content: data.content,
-      type: `MarkdownRemark`
+      type: mdxtype
     }
   };
   markdownNode.frontmatter = {
